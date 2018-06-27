@@ -1,72 +1,47 @@
-﻿@model IList<workshop1.Models.Order>
-@*@model workshop1.Models.OrderQueryArg*@
+﻿@*@model IList<workshop1.Models.Order>*@
+@model workshop1.Models.OrderQueryArg
 @{
     ViewBag.Title = "訂單查詢頁面";
     IList<workshop1.Models.Customer> customers = ViewBag.Customers;
 }
 
 @*<form action="/Order/OrderList" method="POST">*@
-    <table style="margin-top:10px;">
-        <tbody>
-            <tr>
-                <td><label for="OrderID">訂單編號</label></td>
-                <td colspan="3"><input data-val="true" data-val-number="欄位 訂單編號 必須是數字。" id="OrderID" name="OrderID" style="width:200px" type="number" value=""></td>
-            </tr>
-            <tr>
-                <td><label for="CompanyName">客戶名稱</label></td>
-                <td colspan="3"><input class="form-control k-textbox" id="CompanyName" name="CompanyName" style="width:200px" type="text" value=""></td>
-            </tr>
-            <tr>
-                <td><label for="EmployeeID">負責員工</label></td>
-                <td colspan="3">
-                    <select class="form-control" data-val="true" data-val-number="欄位 負責員工 必須是數字。" id="EmployeeID" name="EmployeeID" style="width:200px">
-                        <option value="">請選擇</option>
-                        <option value="1">Sara Davis</option>
-                        <option value="2">Don Funk</option>
-                        <option value="3">Judy Lew</option>
-                        <option value="4">Yael Peled</option>
-                        <option value="5">Sven Buck</option>
-                        <option value="6">Paul Suurs</option>
-                        <option value="7">Russell King</option>
-                        <option value="8">Maria Cameron</option>
-                        <option value="9">Zoya Dolgopyatova</option>
-                        <option value="10">Nina Smith</option>
-                        <option value="11">John Brown</option>
-                        <option value="12">Bill Harris</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="ShipperID">出貨公司</label></td>
-                <td colspan="3">
-                    <select class="form-control" data-val="true" data-val-number="欄位 出貨公司 必須是數字。" id="ShipperID" name="ShipperID" style="width:200px">
-                        <option value="">請選擇</option>
-                        <option value="1">Shipper GVSUA</option>
-                        <option value="2">Shipper ETYNR</option>
-                        <option value="3">Shipper ZHISN</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="OrderDate">訂購日期</label></td>
-                <td><input class="form-control" data-val="true" data-val-date="欄位 訂購日期 必須是日期。" id="OrderDate" name="OrderDate" style="width:200px" type="date" value=""></td>
-                <td><label for="ShipedDate">出貨日期</label></td>
-                <td><input class="form-control" data-val="true" data-val-date="欄位 出貨日期 必須是日期。" id="ShipedDate" name="ShipedDate" style="width:200px" type="date" value=""></td>
-            </tr>
-            <tr>
-                <td><label for="RequiredDate">需要日期</label></td>
-                <td colspan="3"><input class="form-control" data-val="true" data-val-date="欄位 需要日期 必須是日期。" id="RequiredDate" name="RequiredDate" style="width:200px" type="date" value=""></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td colspan="3">
-                    <input type="button" id="Search" value="查詢" class="btn btn-primary">
-                    <input type="reset" value="清除" class="btn btn-warning">
-                    <button type="button" class="btn btn-info" onclick="location.href='/Order/CreateOrder';">新增訂單</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<table style="margin-top:10px;">
+    <tr>
+        <td>@Html.LabelFor(m => m.OrderID)</td>
+        <td colspan="3">@Html.TextBoxFor(m => m.OrderID, new { type = "number", @class = "input-number", style = "width:200px" })</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(m => m.CompanyName)</td>
+        <td colspan="3">@Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control k-textbox", style = "width:200px" })</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(m => m.EmployeeID)</td>
+        <td colspan="3">@Html.DropDownListFor(m => m.EmployeeID, (IEnumerable<SelectListItem>)ViewBag.EmployeeList, "請選擇", new { @class = "form-control", style = "width:200px" })</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(m => m.ShipperID)</td>
+        <td colspan="3">@Html.DropDownListFor(m => m.ShipperID, (IEnumerable<SelectListItem>)ViewBag.ShipperList, "請選擇", new { @class = "form-control", style = "width:200px" })</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(m => m.OrderDate)</td>
+        <td>@Html.TextBoxFor(m => m.OrderDate, new { type = "date", @class = "form-control", style = "width:200px" })</td>
+        <td>@Html.LabelFor(m => m.ShipedDate)</td>
+        <td>@Html.TextBoxFor(m => m.ShipedDate, new { type = "date", @class = "form-control", style = "width:200px" })</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(m => m.RequiredDate)</td>
+        <td colspan="3">@Html.TextBoxFor(m => m.RequiredDate, new { type = "date", @class = "form-control", style = "width:200px" })</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="3">
+            <input type="button" id="Search" value="查詢" class="btn btn-primary" />
+            <input type="reset" value="清除" class="btn btn-warning" />
+            <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CreateOrder", "Order")';">新增訂單</button>
+        </td>
+    </tr>
+</table>
 @*</form>*@
 
 <br>
@@ -80,7 +55,7 @@
 
 
         $("#OrderID").kendoNumericTextBox({
-            format: "n0",
+            format: "#",
             min: 0
         });
 
@@ -188,7 +163,8 @@
 </script>
 
 
-
+ @*-------------------------
+     Original*@
 @*@using (Html.BeginForm("OrderList", "Order", FormMethod.Post))
 {
 

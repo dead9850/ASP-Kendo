@@ -102,23 +102,23 @@ namespace workshop1.Controllers
         [HttpPost]
         public ActionResult CreateOrder(Order order)
         {
-            // 產品選擇是否重複  true:有重複
-            bool isProductDuplicate = order.Details.Select(x => x.ProductID).Distinct().Count() != order.Details.Count;
-            if (!ModelState.IsValid || isProductDuplicate)
-            {
-                ViewBag.ErrorMessage = isProductDuplicate ? "商品重複!" : "驗證失敗!";
-                // 準備 [客戶名稱] 下拉選單
-                ViewBag.CustomerList = GetCustomerList();
+            //// 產品選擇是否重複  true:有重複
+            //bool isProductDuplicate = order.Details.Select(x => x.ProductID).Distinct().Count() != order.Details.Count;
+            //if (!ModelState.IsValid || isProductDuplicate)
+            //{
+            //    ViewBag.ErrorMessage = isProductDuplicate ? "商品重複!" : "驗證失敗!";
+            //    // 準備 [客戶名稱] 下拉選單
+            //    ViewBag.CustomerList = GetCustomerList();
 
-                // 準備 [負責員工] 下拉選單資料
-                ViewBag.EmployeeList = GetEmployeeList();
+            //    // 準備 [負責員工] 下拉選單資料
+            //    ViewBag.EmployeeList = GetEmployeeList();
 
-                // 準備 [出貨公司名稱] 下拉選單資料
-                ViewBag.ShipperList = GetShipperList();
+            //    // 準備 [出貨公司名稱] 下拉選單資料
+            //    ViewBag.ShipperList = GetShipperList();
 
-                return View(order);
-            }
-            ModelState.Clear();
+            //    return View(order);
+            //}
+            //ModelState.Clear();
 
             OrderService orderService = new OrderService();
             orderService.InsOrder(order);
@@ -137,7 +137,7 @@ namespace workshop1.Controllers
             OrderService orderService = new OrderService();
 
             Order order = orderService.GetOrder(orderID);
-
+            ViewBag.Details = order.Details;
             // 準備下拉選單
             PrepareDDLSource();
 
@@ -266,6 +266,13 @@ namespace workshop1.Controllers
             ProductService s = new ProductService();
             SelectList shipperList = new SelectList(s.GetAllProduct(), "ProductID", "ProductName");
             return shipperList;
+        }
+
+        public ActionResult GetTest()
+        {
+            ProductService s = new ProductService();
+
+            return Json(s.GetAllProduct(), JsonRequestBehavior.AllowGet);
         }
     }
 }

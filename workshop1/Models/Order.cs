@@ -68,5 +68,6 @@ namespace workshop1.Models
         [MaxLength(60, ErrorMessage ="字數長度不可超過{1}")]
         [Required]
         public string ShipAddress { get; set; }
+
     }
 }
